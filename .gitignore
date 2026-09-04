@@ -7,3 +7,6 @@
 /settings/sessions.json
 /settings/auth.json
 /settings/banned_ips.json
+# hinotes-vault script outputs (run logs / manifests of local file inventory)
+scripts/hinotes-vault/_artifacts/
+notes-manifest.tsv
