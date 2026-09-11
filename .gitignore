@@ -10,3 +10,6 @@
 # hinotes-vault script outputs (run logs / manifests of local file inventory)
 scripts/hinotes-vault/_artifacts/
 notes-manifest.tsv
+
+# Claude Code per-machine settings (permission allowlist, MCP toggles)
+.claude/settings.local.json
