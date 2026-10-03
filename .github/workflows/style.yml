@@ -6,6 +6,14 @@ on:
   pull_request:
     branches: [ "master" ]
 
+# Superseded PR runs are cancelled: a newer push to the same PR stops the
+# in-flight run for the older commit. Every non-PR event (push to the default
+# branch, schedule, dispatch) is grouped by its own commit sha, so it is never
+# cancelled and never queued behind another run.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   style:
     runs-on: ubuntu-latest

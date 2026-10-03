@@ -4,9 +4,49 @@ updates:
     directory: /
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+      day: monday
+      time: "06:00"
+      timezone: America/New_York
+    open-pull-requests-limit: 2
+    groups:
+      # Routine maintenance: every non-major version update in this directory
+      # lands in ONE PR per week. Listed FIRST on purpose -- Dependabot assigns
+      # a dependency to the first group it matches, so any coupled group below
+      # only ever sees majors, which still arrive as their own reviewable PR.
+      minor-and-patch:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      # Non-major security fixes ship together, whenever an advisory lands --
+      # not on the weekly schedule. A major-version security fix still gets
+      # its own PR. The PR limit and cooldown never apply to security updates.
+      security-minor-and-patch:
+        applies-to: security-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+      day: monday
+      time: "06:00"
+      timezone: America/New_York
+    open-pull-requests-limit: 2
+    cooldown:
+      default-days: 7
+    groups:
+      # Routine maintenance: every non-major version update in this directory
+      # lands in ONE PR per week. Listed FIRST on purpose -- Dependabot assigns
+      # a dependency to the first group it matches, so any coupled group below
+      # only ever sees majors, which still arrive as their own reviewable PR.
+      minor-and-patch:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      # Non-major security fixes ship together, whenever an advisory lands --
+      # not on the weekly schedule. A major-version security fix still gets
+      # its own PR. The PR limit and cooldown never apply to security updates.
+      security-minor-and-patch:
+        applies-to: security-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
